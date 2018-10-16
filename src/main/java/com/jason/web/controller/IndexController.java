@@ -21,7 +21,7 @@ public class IndexController {
     @GetMapping(path = { "/index", "/" })
     public String index() {
     
-        return "index";
+        return "layout/main_layout";
     }
     
     @GetMapping(path = { "/ping" })
