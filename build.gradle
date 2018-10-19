@@ -1,13 +1,15 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
 buildscript {
-	ext {
-		springBootVersion = '2.0.5.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    ext {
+        springBootVersion = '2.0.5.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 apply plugin: 'java'
@@ -20,18 +22,36 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 
 dependencies {
-	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
 //	implementation('org.springframework.boot:spring-boot-starter-data-redis')
-	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
 //	implementation('org.springframework.boot:spring-boot-starter-security')
-	implementation('org.springframework.boot:spring-boot-starter-web')
-	runtimeOnly('org.springframework.boot:spring-boot-devtools')
+    implementation('org.springframework.boot:spring-boot-starter-web')
+    runtimeOnly('org.springframework.boot:spring-boot-devtools')
 //	runtimeOnly('com.h2database:h2')
-	testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 //	testImplementation('org.springframework.security:spring-security-test')
 }
+
+
+task copyTask(type: Copy) {
+
+    def properties = new Properties()
+    file('conf/build.properties').withInputStream {
+        properties.load(it)
+    }
+
+    from('sample_script') {
+        include '**/*.sh'
+        rename(/(.+)-sample/, '$1')
+    }
+    into 'build/libs/bin'
+    filter(ReplaceTokens, tokens: properties)
+}
+
+build.finalizedBy(copyTask)
