@@ -40,4 +40,9 @@ public class IndexController {
         // master 1
         return "master";
     }
+
+    public String develop() {
+        // develop 1
+        return "develop";
+    }
 }
