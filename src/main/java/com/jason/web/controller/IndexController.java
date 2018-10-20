@@ -35,4 +35,9 @@ public class IndexController {
 
         return now.format(dateTimeFormatter);
     }
+
+    public String master() {
+
+        return "master";
+    }
 }
