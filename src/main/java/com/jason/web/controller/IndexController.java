@@ -30,8 +30,9 @@ public class IndexController {
     
         ZonedDateTime now = ZonedDateTime.now();
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss.SSS '('OOOO')'");
-        // fix bug(develop)
-        
+        // resolve conflict
+        // fix bug(dev)
+
         return now.format(dateTimeFormatter);
     }
 }
