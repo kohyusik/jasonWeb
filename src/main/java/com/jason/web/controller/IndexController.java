@@ -43,6 +43,7 @@ public class IndexController {
 
     public String develop() {
         // develop 1 : test rebase
+        // develop 2 to origin/master
         return "develop";
     }
 }
