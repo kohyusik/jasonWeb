@@ -37,7 +37,7 @@ public class IndexController {
     }
 
     public String master() {
-        // master 1
+        // modify 1
         return "master";
     }
 
