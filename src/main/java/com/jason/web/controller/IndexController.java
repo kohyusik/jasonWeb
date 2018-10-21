@@ -17,13 +17,13 @@ import java.time.format.DateTimeFormatter;
 @Controller
 @RequestMapping(path = "/")
 public class IndexController {
-    
+
     @GetMapping(path = { "/index", "/" })
     public String index() {
     
         return "layout/main_layout";
     }
-    
+
     @GetMapping(path = { "/ping" })
     @ResponseBody
     public String ping() {
