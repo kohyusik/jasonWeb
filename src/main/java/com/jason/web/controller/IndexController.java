@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author : kohyusik
@@ -22,6 +24,14 @@ public class IndexController {
     public String index() {
     
         return "layout/main_layout";
+    }
+
+    @GetMapping(path = { "/ajax" })
+    @ResponseBody
+    public List<String> ajaxTest(ArrayList<String> list) {
+    
+        System.out.println(list);
+        return list;
     }
 
     @GetMapping(path = { "/ping" })
