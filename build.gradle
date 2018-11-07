@@ -1,29 +1,50 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 buildscript {
     ext {
         springBootVersion = '2.0.5.RELEASE'
+        springDependencyManagementPluginVersion = '1.0.6.RELEASE'
+
+        springCloudVersion = 'Finchley.RELEASE'
+        springCloudNetflixVersion = '2.0.2.RELEASE'
     }
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:${springDependencyManagementPluginVersion}")
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+allprojects {
+    group = 'com.jason'
+    version = '0.0.1-SNAPSHOT'
 
-group = 'com.jason'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
 
-repositories {
-    mavenCentral()
+    sourceCompatibility = 1.8
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        implementation('org.springframework.boot:spring-boot-starter-web')
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+        runtime('org.springframework.boot:spring-boot-devtools')
+        compileOnly('org.projectlombok:lombok')
+        testCompile('org.springframework.boot:spring-boot-starter-test')
+    }
 }
+
+
+//project(':service-registry') {
+//    dependencies {
+//        compile project(':module-common')
+//    }
+//}
 
 
 dependencies {
@@ -38,20 +59,19 @@ dependencies {
 //	testImplementation('org.springframework.security:spring-security-test')
 }
 
-
-task copyTask(type: Copy) {
-
-    def properties = new Properties()
-    file('conf/build.properties').withInputStream {
-        properties.load(it)
-    }
-
-    from('sample_script') {
-        include '**/*.sh'
-        rename(/(.+)-sample/, '$1')
-    }
-    into 'build/libs/bin'
-    filter(ReplaceTokens, tokens: properties)
-}
-
-build.finalizedBy(copyTask)
+//task copyTask(type: Copy) {
+//
+//    def properties = new Properties()
+//    file('conf/build.properties').withInputStream {
+//        properties.load(it)
+//    }
+//
+//    from('sample_script') {
+//        include '**/*.sh'
+//        rename(/(.+)-sample/, '$1')
+//    }
+//    into 'build/libs/bin'
+//    filter(ReplaceTokens, tokens: properties)
+//}
+//
+//build.finalizedBy(copyTask)
