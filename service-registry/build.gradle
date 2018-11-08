@@ -1,31 +1,21 @@
-plugins {
-    id 'java'
-}
-
-group 'com.jason'
-version '0.0.1-SNAPSHOT'
-
-sourceCompatibility = 1.8
-
-repositories {
-    mavenCentral()
-}
+//plugins {
+//    id 'java'
+//}
+//
+//group 'com.jason'
+//version '0.0.1-SNAPSHOT'
+//
+//sourceCompatibility = 1.8
+//
+//repositories {
+//    mavenCentral()
+//}
 
 dependencies {
-    compile 'org.springframework.cloud:spring-cloud-starter-eureka-server'
-}
+    compile("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
+//    compile('de.codecentric:spring-boot-admin-starter-client:2.0.1')
+    compile('org.springframework.boot:spring-boot-starter-security')
+    compile('org.springframework.boot:spring-boot-starter-actuator')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 
-// Gradle에는 원래 정의 되지 않은 task 이지만 io.spring.dependency-management 
-// plugin 적용으로 새롭게 생긴 task 이며 Spring IO Platform의 버전을 선언 하게 됩니다.
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-        mavenBom "org.springframework.cloud:spring-cloud-netflix:${springCloudNetflixVersion}"
-    }
-}
-
-configurations.all {
-    resolutionStrategy {
-        force 'commons-logging:commons-logging:1.2'
-    }
 }

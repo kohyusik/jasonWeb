@@ -1,4 +1,4 @@
-package com.jason.web.member;
+package com.jason.member;
 
 import org.junit.Test;
 import org.slf4j.Logger;
