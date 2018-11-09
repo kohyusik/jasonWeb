@@ -42,4 +42,12 @@ public class MemberController {
         return memberService.findById(id);
 
     }
+
+    @GetMapping(path = { "/member/custom" })
+    @ResponseBody
+    public Member memberCustom() {
+
+        return memberService.findCustom();
+
+    }
 }

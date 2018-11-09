@@ -24,6 +24,11 @@ public class MemberService {
 
         return dao.findAll();
     }
+    
+    public Member findCustom() {
+        
+        return dao.findCustom();
+    }
 
     @PostConstruct
     public void initMembers() {

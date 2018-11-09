@@ -1,12 +1,8 @@
 package com.jason.member;
 
+import com.jason.member.custom.MemberCustomDAO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 /**
  * @author : kohyusik
@@ -16,6 +12,6 @@ import javax.persistence.Table;
  */
 
 @Repository
-public interface MemberDAO extends JpaRepository<Member, Long> {
-
+public interface MemberDAO extends JpaRepository<Member, Long>, MemberCustomDAO {
+    
 }
