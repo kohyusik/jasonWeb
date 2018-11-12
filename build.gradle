@@ -1,57 +1,101 @@
-import org.apache.tools.ant.filters.ReplaceTokens
-
 buildscript {
-    ext {
-        springBootVersion = '2.0.5.RELEASE'
-    }
     repositories {
+        mavenLocal()
         mavenCentral()
+        jcenter()
+    }
+    ext {
+        springBootVersion = '2.0.6.RELEASE'
+        springCloudVersion = 'Finchley.RELEASE'
+        springDependencyManagementPluginVersion = '1.0.6.RELEASE'
+
+        springCloudNetflixVersion = '2.0.2.RELEASE'
     }
     dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:${springDependencyManagementPluginVersion}"
     }
 }
 
-apply plugin: 'java'
-apply plugin: 'eclipse'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+subprojects {
 
-group = 'com.jason'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = 1.8
+    group = 'com.jason'
+    version = '0.0.1-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
+    apply plugin: 'java'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: "io.spring.dependency-management"
 
-
-dependencies {
-    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
-//	implementation('org.springframework.boot:spring-boot-starter-data-redis')
-    implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
-//	implementation('org.springframework.boot:spring-boot-starter-security')
-    implementation('org.springframework.boot:spring-boot-starter-web')
-    runtimeOnly('org.springframework.boot:spring-boot-devtools')
-	runtimeOnly('com.h2database:h2')
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
-//	testImplementation('org.springframework.security:spring-security-test')
-}
-
-
-task copyTask(type: Copy) {
-
-    def properties = new Properties()
-    file('conf/build.properties').withInputStream {
-        properties.load(it)
+    compileJava {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+        options.encoding = 'UTF-8'
     }
 
-    from('sample_script') {
-        include '**/*.sh'
-        rename(/(.+)-sample/, '$1')
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
     }
-    into 'build/libs/bin'
-    filter(ReplaceTokens, tokens: properties)
+
+//    dependencies {
+//        testCompile group: 'junit', name: 'junit', version: '4.12'
+//
+//        implementation('org.springframework.boot:spring-boot-starter-web')
+//        runtime('org.springframework.boot:spring-boot-devtools')
+//        compileOnly('org.projectlombok:lombok')
+//        testCompile('org.springframework.boot:spring-boot-starter-test')
+//
+////        compile 'org.springframework.cloud:spring-cloud-commons'
+//    }
+
+    buildscript {
+        repositories {
+            mavenLocal()
+            maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+            maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+            mavenCentral()
+            jcenter()
+            maven { url 'http://repo.spring.io/plugins-release' }
+            maven { url "https://plugins.gradle.org/m2/" }
+        }
+        dependencyManagement {
+            imports {
+                mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+            }
+        }
+    }
+
+// Gradle에는 원래 정의 되지 않은 task 이지만 io.spring.dependency-management
+// plugin 적용으로 새롭게 생긴 task 이며 Spring IO Platform의 버전을 선언 하게 됩니다.
+//    dependencyManagement {
+//        imports {
+//            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+//            mavenBom "org.springframework.cloud:spring-cloud-netflix:${springCloudNetflixVersion}"
+//        }
+//    }
 }
 
-build.finalizedBy(copyTask)
+//project(':service-registry') {
+//    dependencies {
+//        compile project(':module-common')
+//    }
+//}
+
+//task copyTask(type: Copy) {
+//
+//    def properties = new Properties()
+//    file('conf/build.properties').withInputStream {
+//        properties.load(it)
+//    }
+//
+//    from('sample_script') {
+//        include '**/*.sh'
+//        rename(/(.+)-sample/, '$1')
+//    }
+//    into 'build/libs/bin'
+//    filter(ReplaceTokens, tokens: properties)
+//}
+//
+//build.finalizedBy(copyTask)

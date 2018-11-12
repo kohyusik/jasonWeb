@@ -1,1 +1,5 @@
 rootProject.name = 'studyJ'
+include 'service-registry'
+include 'api'
+include 'gateway'
+

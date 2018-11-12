@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<body>
+
+<p>Click the button to open a new browser window.</p>
+
+<script>
+    $(document).ready(function() {
+        $(".fb").click(function() {
+            var x = window.open('https://www.facebook.com');
+        });
+    });
+</script>
+<a class="fb">
+    <img src="facebook.png" class="image">
+</a>
+</body>
+</html>
