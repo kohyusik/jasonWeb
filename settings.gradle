@@ -2,4 +2,5 @@ rootProject.name = 'studyJ'
 include 'service-registry'
 include 'api'
 include 'gateway'
+include 'chat-test'
 
